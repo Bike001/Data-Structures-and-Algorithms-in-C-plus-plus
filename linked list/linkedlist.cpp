@@ -1,69 +1,169 @@
+
+
 #include <iostream>
 using namespace std;
 
-//class node{
-//public:
-//    int info;
-//    node* next;
-//    node(int data): info(data), next(nullptr){}
-//};
-
-struct node{
-
-    int info;
-    node* next;
-   
+struct Node{
+    
+    int data;
+    Node* next;
+    
+    
 };
 
-
-class linkedlist{
-    
+class linked_list{
 private:
-    
-    node* head;
-    
+    Node* head;
 public:
-    linkedlist():head(nullptr){}
-    void push(int new_data){
-        node* new_node = new node;
-        new_node -> info = new_data;
-        new_node -> next = head;
-        head = new_node;
-                
-    }
-    void insertend(int new_data){
+    
+    linked_list(): head(nullptr){}
+    
+    void prepend (int newdata){
         
-        node* new_node = new node;
-        new_node -> info = new_data;
-        if (head == nullptr){
-            head = new_node;
+        Node* newNode = new Node;
+        newNode -> data = newdata;
+        newNode -> next = head;
+        head = newNode;
+        
+        
+        
+    }
+    
+    void append (int newdata){
+        
+        Node* newNode = new Node;
+        newNode -> data = newdata;
+        newNode -> next = nullptr;
+        
+        if(!head){
+            head = newNode;
             return;
             
         }
         
-        node* temp = head;
-        while (temp->next != nullptr){
+        Node* current = head;
+        while(current->next){
             
-            temp = temp->next;
+            current = current->next;
             
         }
         
-        temp->next = new_node;
+        current -> next = newNode;
+
+        
     }
     
+    
+    void remove (int value){
+        
+        Node* current = head;
+        
+        if (!head) return;
+        if(head->data == value){
+            
+            Node* temp = head;
+            head = head->next;
+            delete temp;
+            return;
+            
+            
+        }
+        
+        while(current -> next){
+            if( current -> next -> data == value){
+                Node* temp = current -> next;
+                current -> next = current-> next -> next;
+                
+                delete temp;
+                
+                
+                
+            }
+            current = current->next;
+
+        }
+        
+        
+       
+        
+        
+        
+        
+    }
+    
+    
+    void insert_after(int value, int newdata){
+        
+                
+        
+        Node* current = head;
+        
+        while(current){
+            
+            if(current -> data == value){
+                
+                Node* newNode = new Node;
+                newNode->data = newdata;
+                newNode->next = current->next;
+                current-> next = newNode;
+                
+                
+                
+            }
+            
+            current = current->next;
+            
+            
+        }
+        
+        
+        
+    }
+    
+    void print(){
+        
+        Node* current = head;
+        
+        while(current){
+            
+            cout << current->data <<"->";
+            current = current->next;
+            
+        
+            
+            
+        }
+        
+        cout <<"NULL" << endl;
+        
+        
+        
+    }
+    
+    
 };
-
-
-
-
-
-
 int main(){
     
     
+    linked_list list;
+    list.append(10);
+    list.append(30);
+    list.append(20);
+    list.print();
+    list.prepend(300);
+    list.print();
+    list.remove(30);
+    list.print();
+    list.insert_after(300, 15);
+    list.print();
     
-    
-    
-    
+    list.insert_after(10, 15);
+    list.print();
+
+
     return 0;
+    
+    
+    
+    
 }
